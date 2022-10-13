@@ -57,6 +57,10 @@ class Server {
     console.log(`Server run in port: ${this.port}`)
     this.app.listen(this.port)
   }
+
+  getApp(): Express {
+    return this.app
+  }
 }
 
 export default Server

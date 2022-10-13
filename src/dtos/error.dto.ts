@@ -1,4 +1,9 @@
-class ErrorResponse {
+export interface ErrorResponseType {
+  message: string
+  error: unknown
+}
+
+class ErrorResponse implements ErrorResponseType {
   public message: string
   public error: unknown
 

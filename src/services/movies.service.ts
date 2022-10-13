@@ -25,6 +25,29 @@ class MoviesService {
     }
     return []
   }
+
+  async removeAll(): Promise<boolean> {
+    const sql = 'DELETE FROM movies'
+    await this.postgresService.query(sql)
+    return true
+  }
+
+  async updateAll(movies: MovieDto[], year = '2022'): Promise<MovieDto[]> {
+    await this.removeAll()
+
+    const sql = `INSERT INTO movies(movie_id, name, year, image_poster, movie_types_id) VALUES${movies
+      .map((record) => {
+        const row = JSON.stringify(record)
+          .replace(/\]|\[/g, '')
+          .replace(/"/g, "'")
+        return `(${row})`
+      })
+      .join(',')}`
+
+    await this.postgresService.query(sql)
+
+    return movies
+  }
 }
 
 export default MoviesService

@@ -5,12 +5,14 @@
   "main": "dist/app.js",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "start": "npm run build && node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/app.js",
     "start:dev": "nodemon",
     "build": "rimraf ./build && tsc",
     "lint": "eslint 'src/**'",
     "lint:fix": "eslint 'src/**' --fix",
-    "prettier": "prettier . --w"
+    "prettier": "prettier . --w",
+    "coverage": "DOTENV_CONFIG_PATH=.env jest --coverage"
   },
   "keywords": [
     "api",
@@ -24,6 +26,7 @@
     "@types/jest": "^29.1.2",
     "@types/node": "^18.8.5",
     "@types/pg": "^8.6.5",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "build": "^0.1.4",
     "dotenv": "^16.0.3",
