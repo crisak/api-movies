@@ -1,0 +1,25 @@
+{
+  "name": "natiapps-api-movies",
+  "version": "0.0.1",
+  "description": "Api of movies",
+  "main": "dist/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run build && node build/app.js",
+    "start:dev": "nodemon",
+    "build": "rimraf ./build && tsc"
+  },
+  "keywords": [
+    "api",
+    "natiapps",
+    "node"
+  ],
+  "author": "Crisak",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.8.5",
+    "build": "^0.1.4",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.8.4"
+  }
+}
