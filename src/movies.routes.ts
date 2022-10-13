@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+
 import { Router } from 'express'
 import { MoviesController } from '@/controllers'
 
@@ -11,9 +13,9 @@ class MoviesRoutes {
 
   getRoutes(): Router {
     this.router
-      .route(this.resource)
-      .put(this.moviesController.updateAll)
-      .get(this.moviesController.getAll)
+      .route(`/${this.resource}`)
+      .put(this.moviesController.updateAll.bind(this.moviesController))
+      .get(this.moviesController.getAll.bind(this.moviesController))
 
     return this.router
   }

@@ -1,6 +1,8 @@
-import express, { type Response, type Express } from 'express'
+import express, { type Express } from 'express'
 import { MoviesController } from '@/controllers'
 import MoviesRoutes from '@/movies.routes'
+import { MoviesService } from '@/services'
+import { ConnectDB } from '@/config'
 
 class Server {
   private readonly app: Express
@@ -11,10 +13,16 @@ class Server {
   private readonly moviesController: MoviesController
   /** Routers */
   private readonly moviesRoutes: MoviesRoutes
+  /** Services */
+  private readonly moviesService: MoviesService
 
   constructor() {
+    /** Services */
+
+    this.moviesService = new MoviesService(ConnectDB)
+
     /** Controllers */
-    this.moviesController = new MoviesController()
+    this.moviesController = new MoviesController(this.moviesService)
 
     /** Routers */
     this.moviesRoutes = new MoviesRoutes(this.moviesController)
@@ -23,8 +31,8 @@ class Server {
     this.port = process?.env?.NODE_PORT || ''
     this.managerStopperPath = '/api/v1'
     this.middleware()
-    this.handlerError()
     this.routes()
+    this.handlerError()
   }
 
   middleware(): void {
@@ -32,13 +40,15 @@ class Server {
   }
 
   routes(): void {
-    this.app.use(this.managerStopperPath, this.moviesRoutes.getRoutes)
+    this.app.use(
+      this.managerStopperPath,
+      this.moviesRoutes.getRoutes().bind(this.moviesRoutes)
+    )
   }
 
   handlerError(): void {
-    this.app.use((err, req, res: any | Response) => {
-      console.error(err)
-
+    this.app.use((req, res) => {
+      console.error(req)
       res.status(400).json({ message: 'Bad request' })
     })
   }

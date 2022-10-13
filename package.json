@@ -4,7 +4,7 @@
   "description": "Api of movies",
   "main": "dist/app.js",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "start": "npm run build && node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/app.js",
     "start:dev": "nodemon",
     "build": "rimraf ./build && tsc",
@@ -21,6 +21,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.14",
+    "@types/jest": "^29.1.2",
     "@types/node": "^18.8.5",
     "@types/pg": "^8.6.5",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
@@ -32,7 +33,10 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
+    "jest": "^29.1.2",
     "nodemon": "^2.0.20",
+    "supertest": "^6.3.0",
+    "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
     "typescript": "^4.8.4"

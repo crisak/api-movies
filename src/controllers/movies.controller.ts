@@ -1,14 +1,34 @@
-import { MovieDto } from '@/dtos'
+import { MovieDto, ErrorDto } from '@/dtos'
+import { MoviesService } from '@/services'
 import { Request, Response } from 'express'
 
 class MoviesController {
-  getAll(req: Request, response: Response<MovieDto[]>): void {
-    console.log(this)
-    response.status(200).json([])
+  constructor(private readonly moviesService: MoviesService) {}
+
+  async getAll(
+    req: Request,
+    response: Response<MovieDto[] | ErrorDto>
+  ): Promise<void> {
+    try {
+      const { year } = req.query
+      const result = await this.moviesService.getAll(String(year))
+      response.status(200).json(result)
+    } catch (error) {
+      response.status(500).json(new ErrorDto({ error }))
+    }
   }
 
-  updateAll(req: Request, response: Response<MovieDto[]>): void {
-    response.status(200).json([])
+  async updateAll(
+    req: Request,
+    response: Response<MovieDto[] | ErrorDto>
+  ): Promise<void> {
+    try {
+      const result = await this.moviesService.getAll()
+
+      response.status(200).json(result)
+    } catch (error) {
+      response.status(500).json(new ErrorDto({ error }))
+    }
   }
 }
 
