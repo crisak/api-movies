@@ -1,17 +1,30 @@
 import express, { type Response, type Express } from 'express'
+import { MoviesController } from '@/controllers'
+import MoviesRoutes from '@/movies.routes'
 
 class Server {
   private readonly app: Express
   private readonly port: string
   private readonly managerStopperPath: string
 
+  /** Controllers */
+  private readonly moviesController: MoviesController
+  /** Routers */
+  private readonly moviesRoutes: MoviesRoutes
+
   constructor() {
+    /** Controllers */
+    this.moviesController = new MoviesController()
+
+    /** Routers */
+    this.moviesRoutes = new MoviesRoutes(this.moviesController)
+
     this.app = express()
     this.port = process?.env?.NODE_PORT || ''
     this.managerStopperPath = '/api/v1'
     this.middleware()
-    this.routes()
     this.handlerError()
+    this.routes()
   }
 
   middleware(): void {
@@ -19,7 +32,7 @@ class Server {
   }
 
   routes(): void {
-    this.app.use(this.managerStopperPath)
+    this.app.use(this.managerStopperPath, this.moviesRoutes.getRoutes)
   }
 
   handlerError(): void {
