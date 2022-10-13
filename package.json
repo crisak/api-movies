@@ -4,8 +4,8 @@
   "description": "Api of movies",
   "main": "dist/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run build && node dist/app.js",
+    "test": "test",
+    "start": "npm run build && node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/app.js",
     "start:dev": "nodemon",
     "build": "rimraf ./build && tsc",
     "lint": "eslint 'src/**'",
@@ -25,6 +25,7 @@
     "@types/pg": "^8.6.5",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "build": "^0.1.4",
+    "dotenv": "^16.0.3",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
@@ -33,6 +34,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0",
     "typescript": "^4.8.4"
   },
   "dependencies": {

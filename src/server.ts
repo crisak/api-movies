@@ -44,6 +44,7 @@ class Server {
   }
 
   listen(): void {
+    console.log(`Server run in port: ${this.port}`)
     this.app.listen(this.port)
   }
 }
