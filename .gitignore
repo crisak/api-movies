@@ -1,3 +1,5 @@
 node_modules
 .prettiertc_ignore
 dist
+.env.production
+.vscode

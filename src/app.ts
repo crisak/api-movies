@@ -1,2 +1,5 @@
-console.log("Run project");
-let dataa = ''
+import Server from '@/server'
+
+const app = new Server()
+
+app.listen()
