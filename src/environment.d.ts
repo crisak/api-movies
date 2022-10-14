@@ -6,6 +6,8 @@ declare global {
       PGUSER: string
       PGPASSWORD: string
       PGDATABASE: string
+      OMDBAPI_KEY: string
+      OMDBAPI_URL: string
     }
   }
 }

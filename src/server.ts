@@ -1,7 +1,7 @@
 import express, { type Express } from 'express'
 import { MoviesController } from '@/controllers'
 import MoviesRoutes from '@/movies.routes'
-import { MoviesService } from '@/services'
+import { MoviesService, OMDbApiService } from '@/services'
 import { ConnectDB } from '@/config'
 
 class Server {
@@ -15,14 +15,19 @@ class Server {
   private readonly moviesRoutes: MoviesRoutes
   /** Services */
   private readonly moviesService: MoviesService
+  private readonly OMDbApiService: OMDbApiService
 
   constructor() {
     /** Services */
 
     this.moviesService = new MoviesService(ConnectDB)
+    this.OMDbApiService = new OMDbApiService()
 
     /** Controllers */
-    this.moviesController = new MoviesController(this.moviesService)
+    this.moviesController = new MoviesController(
+      this.moviesService,
+      this.OMDbApiService
+    )
 
     /** Routers */
     this.moviesRoutes = new MoviesRoutes(this.moviesController)
