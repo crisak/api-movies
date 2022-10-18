@@ -9,7 +9,7 @@ class MoviesService {
   async getAll(year: string): Promise<MovieDto[]> {
     const values = [year]
     const response = await this.postgresService.query<MovieJoinModel>(
-      `select movie_id, name, image_poster, movie_types.description, year from movies inner join movie_types on movies.movie_types_id = movie_types.movie_types_id WHERE year=$1`,
+      `SELECT movie_id, name, image_poster, movie_types.description, year FROM movies INNER JOIN movie_types on movies.movie_types_id = movie_types.movie_types_id WHERE year=$1`,
       values
     )
     if (response.rows?.length > 0) {
@@ -92,11 +92,12 @@ class MoviesService {
 
     let count = 1
     const params = movies.reduce<Array<string | number>>((prev, record) => {
+      const imagePoster = record.imagePoster === 'N/A' ? '' : record.imagePoster
       const recordSql = [
         record.id,
         record.name,
         record.year,
-        record.imagePoster,
+        imagePoster,
         categoryIndex[record.category].id
       ]
 

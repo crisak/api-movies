@@ -3,6 +3,7 @@ import { MoviesController } from '@/controllers'
 import MoviesRoutes from '@/movies.routes'
 import { MoviesService, OMDbApiService } from '@/services'
 import { ConnectDB } from '@/config'
+import cors from 'cors'
 
 class Server {
   private readonly app: Express
@@ -42,6 +43,7 @@ class Server {
 
   middleware(): void {
     this.app.use(express.json())
+    this.app.use(cors())
   }
 
   routes(): void {

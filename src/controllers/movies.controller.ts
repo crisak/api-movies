@@ -68,10 +68,51 @@ class MoviesController {
         return
       }
 
-      const moviesApi: MovieDto[] = await this.OMDbApiService.getByYear(year)
-      const result = await this.moviesService.updateAll(moviesApi)
+      const totalMovies: number = await this.OMDbApiService.getTotalItemsByYear(
+        year
+      )
 
-      response.status(200).json(result)
+      const byPage = 10
+      let totalPages = totalMovies / byPage
+      totalPages = Math.ceil(totalPages)
+
+      const responseRequests = await Promise.allSettled(
+        [...Array(totalPages)].map(
+          async (v, index) =>
+            await this.OMDbApiService.getByYear({
+              year,
+              page: index + 1
+            })
+        )
+      )
+
+      const errors = responseRequests.filter(
+        ({ status }) => status === 'rejected'
+      )
+
+      if (errors.length) {
+        const message = 'Server internal error'
+        response.status(500).json(new ErrorDto({ message, error: errors }))
+        return
+      }
+
+      const moviesConcat = responseRequests.reduce<MovieDto[]>((prev, req) => {
+        if (req.status === 'rejected') {
+          return prev
+        }
+
+        const movies = req.value
+
+        if (!movies) {
+          return prev
+        }
+
+        return [...prev, ...movies]
+      }, [])
+
+      const data = await this.moviesService.updateAll(moviesConcat)
+
+      response.status(200).json(data)
     } catch (error) {
       response.status(500).json(new ErrorDto({ error }))
     }
