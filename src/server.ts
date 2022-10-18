@@ -61,7 +61,7 @@ class Server {
   }
 
   listen(): void {
-    console.log(`Server run in port: ${this.port}`)
+    console.log(`Server run as ${process.env.NODE_ENV} in port: ${this.port}`)
     this.app.listen(this.port)
   }
 
