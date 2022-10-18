@@ -9,7 +9,7 @@
 
 ## 📜 Endpoint available
 
-**Development:**
+**Production:**
 
 ```bash
 https://api-movies-production.up.railway.app/api/v1
