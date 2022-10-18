@@ -34,7 +34,8 @@ class Server {
     this.moviesRoutes = new MoviesRoutes(this.moviesController)
 
     this.app = express()
-    this.port = process?.env?.NODE_PORT || ''
+    /** production | dev | error */
+    this.port = process.env.PORT || process?.env?.NODE_PORT || ''
     this.managerStopperPath = '/api/v1'
     this.middleware()
     this.routes()

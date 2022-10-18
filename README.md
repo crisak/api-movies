@@ -12,7 +12,7 @@
 **Development:**
 
 ```bash
-https://www.test-apinative.com/api/v1
+https://api-movies-production.up.railway.app/api/v1
 ```
 
 ### GET - /movies
